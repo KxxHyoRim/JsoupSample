@@ -1,53 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/iv_og_image"
+    <data>
+
+        <variable
+            name="OgData"
+            type="org.sopt.jsoupsample.OgData" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="50dp"
-        android:src="@drawable/rectangle_gray_2"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Title : "
-        app:layout_constraintStart_toStartOf="@id/iv_og_image"
-        app:layout_constraintTop_toBottomOf="@id/iv_og_image" />
+        <ImageView
+            android:id="@+id/iv_og_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/rectangle_gray_2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:ogImage="@{OgData.ogImage}" />
 
-    <TextView
-        android:id="@+id/tv_og_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/tv_title"
-        app:layout_constraintStart_toEndOf="@id/tv_title"
-        app:layout_constraintTop_toTopOf="@id/tv_title"
-        tools:text="크롤링해온 텍스트" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Title : "
+            app:layout_constraintStart_toStartOf="@id/iv_og_image"
+            app:layout_constraintTop_toBottomOf="@id/iv_og_image" />
 
-    <TextView
-        android:id="@+id/tv_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Description : "
-        app:layout_constraintStart_toStartOf="@id/tv_title"
-        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+        <TextView
+            android:id="@+id/tv_og_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{OgData.ogTitle}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_title"
+            app:layout_constraintStart_toEndOf="@id/tv_title"
+            app:layout_constraintTop_toTopOf="@id/tv_title"
+            tools:text="크롤링해온 텍스트" />
 
-    <TextView
-        android:id="@+id/tv_og_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="크롤링 description"
-        app:layout_constraintStart_toEndOf="@id/tv_description"
-        app:layout_constraintTop_toTopOf="@id/tv_description" />
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description : "
+            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <TextView
+            android:id="@+id/tv_og_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{OgData.ogDescription}"
+            app:layout_constraintStart_toEndOf="@id/tv_description"
+            app:layout_constraintTop_toTopOf="@id/tv_description"
+            tools:text="크롤링 description" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
