@@ -13,8 +13,6 @@ import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-//    private val ogData = OgData("", "", "", "")
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,33 +20,27 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         GlobalScope.launch {
-
-            try {
-                val url = "https://firebase.google.com/"
-                val doc: Document = Jsoup.connect(url).get()
-                Log.d("docCrawling", doc.toString())
-                val ogData = OgData()
-
-                val ogTags = doc.select("meta[property^=og:]")
-                if (ogTags.size > 0){
-                    ogTags.forEachIndexed { index, _ ->
-                        val tag = ogTags[index]
-                        when (tag.attr("property")) {
-                            "og:image" -> ogData.ogImage = tag.attr("content")
-                            "og:description" -> ogData.ogDescription = tag.attr("content")
-                            "og:title" -> ogData.ogTitle = tag.attr("content")
-                        }
-                    }
-                }
-
-                binding.ogData = ogData
-
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
+            kotlin.runCatching { getOgData() }
         }
+    }
+
+    private fun getOgData() {
+        val url = "https://firebase.google.com/"
+        val doc: Document = Jsoup.connect(url).get()
+        val ogTags = doc.select("meta[property^=og:]")
+
+        val ogData = OgData(url).apply {
+            if (ogTags.size == 0) return@apply
+            ogTags.forEachIndexed { index, _ ->
+                val tag = ogTags[index]
+                when (tag.attr("property")) {
+                    "og:image" -> this.ogImage = tag.attr("content")
+                    "og:description" -> this.ogDescription = tag.attr("content")
+                    "og:title" -> this.ogTitle = tag.attr("content")
+                }
+            }
+        }
+        binding.ogData = ogData
     }
 }
 
